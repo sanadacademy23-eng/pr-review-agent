@@ -6,13 +6,7 @@ G a t e K e e p e r   t e s t
 
 
 
+AWS_SECRET_KEY = KJHEDEDHJjhkjhfelejfe65456e6felkjfekgjfdekjfe6f5eeljbsjhcxbKHDJKEHCEJ
+
 PASSWORD = JKHDEJ45fekjhehjfe
-
-AWS\_SECRET\_KEY = KJHEDEDHJjhkjhfelejfe65456e6felkjfekgjfdekjfe6f5eeljbsjhcxbKHDJKEHCEJ
-
-OPENAI\_API\_KEY = kjhkjdshjGUZGgdpeoduGIUGEDHBED56565efekhbed3fekjbdjhvdjKJHGDUZGCHE
-
-P A S S W O R D   =   D H R h j f j h f 5 4 f k j h f r k h c r j k K J G D H JAA
-
-PASSWORD = JKHDEJ45fekjhehjfeAASECUCODE
 
