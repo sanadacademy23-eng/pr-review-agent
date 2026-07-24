@@ -12,33 +12,25 @@ def read_pr_context():
     repo = os.environ["REPO"]
     pr_number = os.environ["PR_NUMBER"]
     token = os.environ["GH_TOKEN"]
-    url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}/files"
+    url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
 
     headers = {
         "Authorization": f"Bearer {token}",
-        "Accept": "application/vnd.github.v3+json"
+        "Accept": "application/vnd.github.v3.diff"
     }
 
     response = requests.get(url, headers=headers)
 
-    # Safety Net 1: Catch GitHub API errors immediately
     if response.status_code != 200:
-        print(f"Error fetching PR files: {response.status_code} {response.text}")
-        return "CHANGES IN THIS PULL REQUEST:\n(Error fetching files)"
+        print(f"Error fetching PR diff: {response.status_code} {response.text}")
+        return "CHANGES IN THIS PULL REQUEST:\n(Error fetching diff)"
 
-    files = response.json()
+    diff_text = response.text.strip()
 
-    context = ["CHANGES IN THIS PULL REQUEST (Git Diff Format):"]
+    if not diff_text:
+        return "CHANGES IN THIS PULL REQUEST:\n(No diff content returned)"
 
-    for file in files:
-        context.append(f"\nFile: {file.get('filename', 'Unknown')} (Status: {file.get('status', 'unknown')})")
-        patch = file.get("patch")
-        if patch:
-            context.append(patch)
-        else:
-            context.append("(No inline diff provided by GitHub API. Text changes are empty.)")
-
-    return "\n".join(context)
+    return "CHANGES IN THIS PULL REQUEST (Git Diff Format):\n" + diff_text
 
 def review_pull_request(context):
     prompt = f"""
